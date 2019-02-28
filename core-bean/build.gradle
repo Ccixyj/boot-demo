@@ -1,5 +1,3 @@
-
-
 group 'me.boot'
 version '1.0-SNAPSHOT'
 
@@ -9,6 +7,9 @@ targetCompatibility = 1.8
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation "hikari-cp:hikari-cp:$hikari"
+    implementation "org.springframework.boot:spring-boot-starter-jdbc:$spring_boot"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
 }
 
 compileKotlin {
