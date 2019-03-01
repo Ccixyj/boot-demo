@@ -1,5 +1,6 @@
 package me.boot.bootdemo
 
+import javafx.application.Application.launch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
