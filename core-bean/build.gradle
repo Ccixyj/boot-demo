@@ -9,5 +9,6 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation "org.springframework.boot:spring-boot-starter-jdbc"
     implementation 'mysql:mysql-connector-java'
+    implementation 'com.alibaba:druid:1.1.14'
 }
 
