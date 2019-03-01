@@ -20,10 +20,12 @@ import javax.sql.DataSource
  * 1. 添加 @EnableTransactionManagement
  * 2. 添加 @Transactional
  * 3. 默认 RuntimeException 级别
+ *
+ *
  */
 @SpringBootApplication(scanBasePackages = ["me.boot"])
 @EnableTransactionManagement
-@EnableAspectJAutoProxy(proxyTargetClass = false)
+@EnableAspectJAutoProxy(proxyTargetClass = true) //false默认使用jdk proxy ， cglib:没有接口仍需要使用cglib
 class CoreBeanApp {
 
     @Autowired
@@ -56,7 +58,7 @@ fun main(args: Array<String>) = runBlocking(Dispatchers.Default) {
         val app = application.getBean<CoreBeanApp>()
         logger.info(" app catalog --->${app.dataSource}")
         logger.info("all news -> ${app.newsDao.allNews().joinToString("   |   ")}")
-//        logger.info("add product-> ${app.newsDao.add("hello world")}")
+        logger.info("add product-> ${app.newsDao.add("hello world")}")
 //        logger.info("add product-> ${app.newsDao.addBatch("A", "B", "C")}")
         delay(1600)
 

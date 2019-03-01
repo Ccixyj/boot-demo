@@ -1,5 +1,6 @@
 package me.boot
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
@@ -19,10 +20,11 @@ class AOP {
 
     @Around("methodLog()")
     fun cut(point: ProceedingJoinPoint) = kotlin.runCatching {
-        println("before")
+        println("before  ： $point ${point.signature.name} ${point.args}")
         point.proceed()
     }.onFailure {
         println("onFailure")
+        it.printStackTrace()
     }.onSuccess {
         println("onSuccess")
     }.getOrNull().apply {

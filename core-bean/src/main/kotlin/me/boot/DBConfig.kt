@@ -2,7 +2,6 @@ package me.boot
 
 import com.alibaba.druid.pool.DruidDataSource
 import org.springframework.boot.SpringBootConfiguration
-import org.springframework.context.annotation.Bean
 import javax.sql.DataSource
 
 
@@ -22,7 +21,7 @@ class DBConfig {
         maxActive = 20
         // 配置获取连接等待超时的时间
         maxWait = 60000
-        isKeepAlive= true
+        isKeepAlive = true
         // 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
         timeBetweenEvictionRunsMillis = 60000
         // 配置一个连接在池中最小生存的时间，单位是毫秒
