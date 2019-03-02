@@ -2,6 +2,7 @@ package me.boot
 
 import com.alibaba.druid.pool.DruidDataSource
 import org.springframework.boot.SpringBootConfiguration
+import org.springframework.stereotype.Component
 import javax.sql.DataSource
 
 
