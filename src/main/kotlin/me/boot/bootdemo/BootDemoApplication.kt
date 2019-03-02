@@ -10,6 +10,9 @@ import org.springframework.beans.factory.getBean
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.boot.CommandLineRunner
+import org.springframework.boot.actuate.health.AbstractHealthIndicator
+import org.springframework.boot.actuate.health.Health
+import org.springframework.boot.actuate.health.HealthIndicator
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
@@ -20,7 +23,6 @@ import org.springframework.context.ApplicationEvent
 import org.springframework.context.ApplicationListener
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Profile
-import org.springframework.context.support.GenericApplicationContext
 import org.springframework.core.annotation.Order
 import org.springframework.scheduling.annotation.Async
 import org.springframework.scheduling.annotation.EnableAsync
@@ -50,23 +52,25 @@ fun main(args: Array<String>) = runBlocking {
         application.publishEvent(MyEvent(id.getAndIncrement()))
     }
 
-    GenericApplicationContext {
-        logger.info("-----------GenericApplicationContext-----------")
-        logger.info(application.getBean<EventListener>().toString())
-        logger.info("-----------GenericApplicationContext-----------")
-    }
+//    launch {
+//        GenericApplicationContext {
+//            logger.info("-----------GenericApplicationContext-----------")
+//            logger.info(application.getBean<EventListener>().toString())
+//            logger.info("-----------GenericApplicationContext-----------")
+//        }
+//
+//    }
 
+//    launch {
+//        GenericApplicationContext {
+//            logger.info(application.getBean<EventListener>().toString())
+//            refresh()
+//            application.publishEvent(MyEvent(id.getAndIncrement()))
+//        }
+//
+//    }
 
-    GenericApplicationContext {
-        logger.info(application.getBean<EventListener>().toString())
-        refresh()
-        application.publishEvent(MyEvent(id.getAndIncrement()))
-    }
-
-    delay(8000)
-
-    application.close()
-
+    Unit
 
 }
 
@@ -157,7 +161,7 @@ data class MyEvent(val id: Int) : ApplicationEvent(id)
  *  4.spi机制
  *  @see org.springframework.core.io.support.SpringFactoriesLoader
  */
-@Component
+//@Component
 class EventListener : ApplicationListener<ApplicationEvent> {
 
     private val logger = LoggerFactory.getLogger("EventListener")
@@ -204,5 +208,13 @@ class ServerRunner : CommandLineRunner {
 class ServerAppRunner : ApplicationRunner {
     override fun run(args: ApplicationArguments?) {
         logger.info("ServerAppRunner : app start ${args?.optionNames}")
+    }
+}
+
+@Component
+class HealthTest : AbstractHealthIndicator() {
+
+    override fun doHealthCheck(builder: Health.Builder?) {
+        builder?.down()?.withDetail("hello","this is test!")
     }
 }

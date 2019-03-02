@@ -2,13 +2,25 @@ group 'me.boot'
 version '1.0-SNAPSHOT'
 
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
 dependencies {
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
     implementation "org.springframework.boot:spring-boot-starter-jdbc"
+    implementation "org.springframework.boot:spring-boot-starter-aop"
     implementation 'mysql:mysql-connector-java'
     implementation 'com.alibaba:druid:1.1.14'
+
+    implementation group: 'redis.clients', name: 'jedis', version: '3.0.1'
+    compile group: 'com.lmax', name: 'disruptor', version: '3.4.2'
+
+    implementation project(':starter-redis')
 }
 
+configurations {
+    all {
+        //去除默认的logback
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+}
