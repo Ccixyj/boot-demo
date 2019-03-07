@@ -29,7 +29,6 @@ allprojects { p ->
     group = 'me.boot'
     version = '0.0.1-SNAPSHOT'
 
-
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
@@ -37,18 +36,6 @@ allprojects { p ->
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         mavenCentral()
     }
-
-    dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter'
-        implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
-        implementation 'org.jetbrains.kotlin:kotlin-reflect'
-        implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-        runtimeOnly 'org.springframework.boot:spring-boot-devtools'
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
-        implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
-        //implementation(":core-bean")
-    }
-
 
     compileKotlin {
         kotlinOptions {
@@ -67,7 +54,3 @@ allprojects { p ->
 
 }
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-}

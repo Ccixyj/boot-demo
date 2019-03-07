@@ -1,4 +1,4 @@
-package me.boot.bootdemo
+package me.boot.test
 
 import org.slf4j.LoggerFactory
 import org.springframework.scheduling.annotation.Async

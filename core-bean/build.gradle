@@ -4,7 +4,7 @@ version '1.0-SNAPSHOT'
 
 dependencies {
 
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
 
     implementation 'org.springframework.boot:spring-boot-starter-log4j2'
     implementation "org.springframework.boot:spring-boot-starter-jdbc"
@@ -13,7 +13,7 @@ dependencies {
     implementation 'com.alibaba:druid:1.1.14'
 
     implementation group: 'redis.clients', name: 'jedis', version: '3.0.1'
-    compile group: 'com.lmax', name: 'disruptor', version: '3.4.2'
+    implementation group: 'com.lmax', name: 'disruptor', version: '3.4.2'
 
     implementation project(':starter-redis')
 }

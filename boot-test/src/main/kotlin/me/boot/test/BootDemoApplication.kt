@@ -1,4 +1,4 @@
-package me.boot.bootdemo
+package me.boot.test
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -12,7 +12,6 @@ import org.springframework.boot.ApplicationRunner
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.actuate.health.AbstractHealthIndicator
 import org.springframework.boot.actuate.health.Health
-import org.springframework.boot.actuate.health.HealthIndicator
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
@@ -51,25 +50,6 @@ fun main(args: Array<String>) = runBlocking {
         delay(600)
         application.publishEvent(MyEvent(id.getAndIncrement()))
     }
-
-//    launch {
-//        GenericApplicationContext {
-//            logger.info("-----------GenericApplicationContext-----------")
-//            logger.info(application.getBean<EventListener>().toString())
-//            logger.info("-----------GenericApplicationContext-----------")
-//        }
-//
-//    }
-
-//    launch {
-//        GenericApplicationContext {
-//            logger.info(application.getBean<EventListener>().toString())
-//            refresh()
-//            application.publishEvent(MyEvent(id.getAndIncrement()))
-//        }
-//
-//    }
-
     Unit
 
 }
@@ -155,7 +135,7 @@ data class MyEvent(val id: Int) : ApplicationEvent(id)
 
 /**
  *  1.application.addListener()
- *  2.配置properties: context.listener.classes=me.boot.bootdemo.EventListener
+ *  2.配置properties: context.listener.classes=me.boot.test.EventListener
  *  @see org.springframework.boot.context.config.DelegatingApplicationListener
  *  3.配置handle
  *  4.spi机制

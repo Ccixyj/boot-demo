@@ -7,4 +7,6 @@ rootProject.name = 'boot-demo'
 
 include ':core-bean'
 include ':starter-redis'
+include ':base'
+include ':boot-test'
 
