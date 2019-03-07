@@ -13,14 +13,15 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.actuate.health.AbstractHealthIndicator
 import org.springframework.boot.actuate.health.Health
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.runApplication
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationEvent
 import org.springframework.context.ApplicationListener
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Profile
 import org.springframework.core.annotation.Order
 import org.springframework.scheduling.annotation.Async
@@ -28,9 +29,11 @@ import org.springframework.scheduling.annotation.EnableAsync
 import org.springframework.stereotype.Component
 import java.util.concurrent.atomic.AtomicInteger
 import javax.annotation.Resource
+import javax.sql.DataSource
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = ["me.boot"])
 @EnableAsync
+//@ComponentScan("me.boot")
 class BootDemoApplication
 
 private val logger = LoggerFactory.getLogger("main")
@@ -83,7 +86,7 @@ class AppConfig {
     fun createJeep() = Jeep()
 
     @Bean
-    @ConditionalOnClass(name = ["me.boot.bootdemo.FileConfig"])
+    @ConditionalOnClass(name = ["me.boot.test.FileConfig"])
     fun createFileC() = FileConfig()
 
 
@@ -97,8 +100,13 @@ class AppConfig {
 
     @Bean
     @Profile("dev")
-    @ConditionalOnBean(name = ["createFileCTest"])
+    @ConditionalOnMissingBean(name = ["createFileCTest"])
     fun createFileCDev() = FileConfig()
+
+    @Bean
+    @Profile("default")
+    @ConditionalOnMissingBean(name = ["createFileC"])
+    fun createFileDef() = FileConfig()
 
 
     fun show() {
@@ -195,6 +203,24 @@ class ServerAppRunner : ApplicationRunner {
 class HealthTest : AbstractHealthIndicator() {
 
     override fun doHealthCheck(builder: Health.Builder?) {
-        builder?.down()?.withDetail("hello","this is test!")
+        builder?.down()?.withDetail("hello", "this is test!")
+    }
+}
+
+@Component
+class DBTest : AbstractHealthIndicator() {
+
+    @Resource
+    lateinit var app: ApplicationContext
+
+
+    override fun doHealthCheck(builder: Health.Builder?) {
+        kotlin.runCatching {
+            app.getBeanNamesForType(DataSource::class.java).joinToString { app.getBean(it).javaClass.name }
+        }.onSuccess {
+            builder?.up()?.withDetail("DB", it)
+        }.onFailure {
+            builder?.down()?.withDetail("msg", it.message)
+        }
     }
 }

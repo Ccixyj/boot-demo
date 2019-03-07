@@ -12,7 +12,14 @@ dependencies {
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
-    //implementation(":core-bean")
+
+    //db
+    api "org.springframework.boot:spring-boot-starter-jdbc"
+    api "org.springframework.boot:spring-boot-starter-aop"
+    api 'mysql:mysql-connector-java'
+    api 'com.alibaba:druid:1.1.14'
+
+    api group: 'redis.clients', name: 'jedis', version: '3.0.1'
 }
 
 

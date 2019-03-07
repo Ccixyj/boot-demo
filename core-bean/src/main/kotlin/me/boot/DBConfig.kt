@@ -2,14 +2,16 @@ package me.boot
 
 import com.alibaba.druid.pool.DruidDataSource
 import org.springframework.boot.SpringBootConfiguration
+import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
 import javax.sql.DataSource
 
 
+@Component
 @SpringBootConfiguration
 class DBConfig {
 
-    //@Bean(name = ["druid"])
+    @Bean(name = ["druid"])
     fun druidDS(): DataSource = DruidDataSource().apply {
 
         url = "jdbc:mysql://localhost:3306/ktor?serverTimezone=GMT%2B8"
