@@ -5,7 +5,7 @@ version '1.0-SNAPSHOT'
 dependencies {
 
     testImplementation group: 'junit', name: 'junit', version: '4.12'
-
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter-log4j2'
     implementation group: 'com.lmax', name: 'disruptor', version: '3.4.2'
 

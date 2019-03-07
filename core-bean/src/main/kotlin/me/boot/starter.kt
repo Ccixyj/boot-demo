@@ -1,9 +1,10 @@
+package me.boot
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import me.boot.dao.NewsDao
-import me.starter.redis.EnableRedis
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.getBean
@@ -38,7 +39,7 @@ class CoreBeanApp {
     @Autowired
     lateinit var newsDao: NewsDao
 
-    val logger = LoggerFactory.getLogger("main")
+    val logger = LoggerFactory.getLogger("me.boot.main")
     @Bean
     fun testBean(platformTransactionManager: PlatformTransactionManager): Any {
         logger.info(">>>>>>>>>>" + platformTransactionManager.javaClass.name)
@@ -83,7 +84,7 @@ fun ApplicationContext.testJedis() {
 
 
 suspend fun ApplicationContext.testCoreBean() {
-    val logger = LoggerFactory.getLogger("CoreBeanApp")
+    val logger = LoggerFactory.getLogger("me.boot.CoreBeanApp")
     logger.info(" app catalog --->${getBean<DataSource>().connection}")
     val app = getBean<CoreBeanApp>()
     logger.info(" app catalog --->${app.dataSource}")

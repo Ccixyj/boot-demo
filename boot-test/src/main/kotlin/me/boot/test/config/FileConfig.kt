@@ -1,4 +1,4 @@
-package me.boot.test
+package me.boot.test.config
 
 import org.springframework.boot.SpringBootConfiguration
 import org.springframework.context.annotation.PropertySource

@@ -10,7 +10,7 @@ dependencies {
     api 'org.jetbrains.kotlin:kotlin-reflect'
     api 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testApi 'org.springframework.boot:spring-boot-starter-test'
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
 
     //db

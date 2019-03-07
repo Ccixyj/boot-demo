@@ -1,9 +1,14 @@
 package me.boot.test
 
+import io.micrometer.core.aop.TimedAspect
+import io.micrometer.core.instrument.MeterRegistry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import me.boot.test.beans.Jeep
+import me.boot.test.config.DataSourceConfig
+import me.boot.test.config.FileConfig
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.beans.factory.getBean
@@ -21,7 +26,7 @@ import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationEvent
 import org.springframework.context.ApplicationListener
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.ComponentScan
+import org.springframework.context.annotation.EnableAspectJAutoProxy
 import org.springframework.context.annotation.Profile
 import org.springframework.core.annotation.Order
 import org.springframework.scheduling.annotation.Async
@@ -33,10 +38,11 @@ import javax.sql.DataSource
 
 @SpringBootApplication(scanBasePackages = ["me.boot"])
 @EnableAsync
+@EnableAspectJAutoProxy
 //@ComponentScan("me.boot")
 class BootDemoApplication
 
-private val logger = LoggerFactory.getLogger("main")
+private val logger = LoggerFactory.getLogger("me.boot.main")
 
 
 fun main(args: Array<String>) = runBlocking {
@@ -107,6 +113,11 @@ class AppConfig {
     @Profile("default")
     @ConditionalOnMissingBean(name = ["createFileC"])
     fun createFileDef() = FileConfig()
+
+    @Bean
+    fun timedAspect(registry: MeterRegistry): TimedAspect {
+        return TimedAspect(registry);
+    }
 
 
     fun show() {
