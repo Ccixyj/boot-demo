@@ -22,16 +22,19 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.runApplication
+import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationEvent
 import org.springframework.context.ApplicationListener
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.EnableAspectJAutoProxy
 import org.springframework.context.annotation.Profile
 import org.springframework.core.annotation.Order
 import org.springframework.scheduling.annotation.Async
 import org.springframework.scheduling.annotation.EnableAsync
 import org.springframework.stereotype.Component
+import org.springframework.web.util.DefaultUriBuilderFactory
 import java.util.concurrent.atomic.AtomicInteger
 import javax.annotation.Resource
 import javax.sql.DataSource
@@ -39,7 +42,7 @@ import javax.sql.DataSource
 @SpringBootApplication(scanBasePackages = ["me.boot"])
 @EnableAsync
 @EnableAspectJAutoProxy
-//@ComponentScan("me.boot")
+@ComponentScan("me.boot")
 class BootDemoApplication
 
 private val logger = LoggerFactory.getLogger("me.boot.main")
@@ -95,6 +98,11 @@ class AppConfig {
     @ConditionalOnClass(name = ["me.boot.test.FileConfig"])
     fun createFileC() = FileConfig()
 
+
+    //rest template
+    @Bean
+    fun restTemplate(builder: RestTemplateBuilder) =
+        builder.uriTemplateHandler(DefaultUriBuilderFactory("http://localhost:8080")).build()
 
     /**
      * --spring.profiles.active=dev,test
