@@ -4,9 +4,11 @@ import me.boot.test.BootDemoApplication
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mock
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
@@ -15,9 +17,14 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForObject
 
+/**
+ *  SpringBootTest 和 WebMvcTest 冲突
+ *  使用@AutoConfigureMockMvc
+ */
 @SpringBootTest(classes = [BootDemoApplication::class],webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @RunWith(SpringRunner::class)
 @AutoConfigureMockMvc
+//@WebMvcTest
 class IndexControllerTest {
 
     private val logger = LoggerFactory.getLogger(IndexControllerTest::class.java)
